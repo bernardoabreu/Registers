@@ -1,7 +1,37 @@
 import sublime
 import sublime_plugin
+import json
+import os
 
-SELECTIONS = [('text', [])] * 10
+OUTFILE = 'Persistent/saved_registers.json'
+
+
+def check_selections():
+    if len(SELECTIONS) != 10:
+        return False
+    try:
+        for t, content in SELECTIONS:
+            if t not in ('text', 'macro') or not isinstance(content, list):
+                return False
+    except Exception:
+        return False
+
+    return True
+
+
+dir_path = os.path.dirname(os.path.realpath(__file__))
+
+with open(dir_path + '/' + OUTFILE, 'r') as f:
+    SELECTIONS = json.load(f)
+
+if not check_selections():
+    SELECTIONS = [('text', [])] * 10
+
+
+def _save_as_json():
+    dir_path = os.path.dirname(os.path.realpath(__file__))
+    with open(dir_path + '/' + OUTFILE, 'w') as f:
+        json.dump(SELECTIONS, f)
 
 
 class OutputRegisterCommand(sublime_plugin.TextCommand):
@@ -26,19 +56,23 @@ class InputSelectionCommand(sublime_plugin.TextCommand):
     def run(self, edit, num):
         SELECTIONS[num] = ('text', [self.view.substr(region)
                                     for region in self.view.sel()])
+        _save_as_json()
 
 
 class InputClipboardCommand(sublime_plugin.TextCommand):
     def run(self, edit, num):
         SELECTIONS[num] = ('text', [sublime.get_clipboard()])
+        _save_as_json()
 
 
 class InputMacroCommand(sublime_plugin.TextCommand):
     def run(self, edit, num):
         SELECTIONS[num] = ('macro', sublime.get_macro())
+        _save_as_json()
 
 
 class ClearRegistersCommand(sublime_plugin.TextCommand):
     def run(self, edit):
         global SELECTIONS
         SELECTIONS = [('text', [])] * 10
+        _save_as_json()
