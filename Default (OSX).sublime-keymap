@@ -44,5 +44,5 @@
 	{ "keys": ["super+shift+q", "9"], "command": "input_macro", "args": {"num": 9} },
 	{ "keys": ["super+shift+q", "0"], "command": "input_macro", "args": {"num": 0} },
 
-	{ "keys": ["super+alt+c"], "command": "clear_registers" },
+	{ "keys": ["super+alt+c"], "command": "clear_registers" }
 ]

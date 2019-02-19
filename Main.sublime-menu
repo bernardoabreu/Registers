@@ -60,7 +60,7 @@
 								"command": "input_selection",
 								"args": {"num": 9},
 								"caption": "Record on register 9"
-							},
+							}
 						]
 					},
 					{
@@ -116,7 +116,7 @@
 								"command": "input_clipboard",
 								"args": {"num": 9},
 								"caption": "Record on register 9"
-							},
+							}
 						]
 					},
 					{
@@ -172,7 +172,7 @@
 								"command": "input_macro",
 								"args": {"num": 9},
 								"caption": "Record on register 9"
-							},
+							}
 						]
 					},
 					{
@@ -228,7 +228,7 @@
 								"command": "output_register",
 								"args": {"num": 9},
 								"caption": "Output register 9"
-							},
+							}
 						]
 					},
 					{

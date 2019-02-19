@@ -19,9 +19,9 @@ def check_selections():
     return True
 
 
-dir_path = os.path.dirname(os.path.realpath(__file__))
+DIR_PATH = os.path.dirname(os.path.realpath(__file__))
 
-with open(dir_path + '/' + OUTFILE, 'r') as f:
+with open(DIR_PATH + '/' + OUTFILE, 'r') as f:
     SELECTIONS = json.load(f)
 
 if not check_selections():
@@ -29,8 +29,7 @@ if not check_selections():
 
 
 def _save_as_json():
-    dir_path = os.path.dirname(os.path.realpath(__file__))
-    with open(dir_path + '/' + OUTFILE, 'w') as f:
+    with open(DIR_PATH + '/' + OUTFILE, 'w') as f:
         json.dump(SELECTIONS, f)
 
 
@@ -39,8 +38,11 @@ class OutputRegisterCommand(sublime_plugin.TextCommand):
         selection = SELECTIONS[num][1]
         if SELECTIONS[num][0] == 'macro':
             for macro_cmd in selection:
-                self.view.run_command(macro_cmd['command'],
-                                      args=macro_cmd['args'])
+                if macro_cmd['args'] is None:
+                    self.view.run_command(macro_cmd['command'])
+                else:
+                    self.view.run_command(macro_cmd['command'],
+                                          args=macro_cmd['args'])
         else:
             sel = self.view.sel()
             if len(selection) > 1:
