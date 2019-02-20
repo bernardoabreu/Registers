@@ -18,5 +18,3 @@ E.g. `ctrl+alt+1` outputs register 1.
 `ctrl+shift+q`, `[0-9]`: Inputs the current recorded macro into the chosen register.
 
 `ctrl+alt+c`: Clear the content of all registers.
-
-Note: OSX uses `cmd` instead of `ctrl`.
