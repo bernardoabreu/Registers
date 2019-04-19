@@ -2,15 +2,14 @@ import sublime
 import sublime_plugin
 
 
-settings_filename = 'Registers.sublime-settings'
-
-REG_SET = sublime.load_settings(settings_filename)
+SETTINGS_FILENAME = 'Registers.sublime-settings'
 
 
 class OutputRegisterCommand(sublime_plugin.TextCommand):
     def run(self, edit, num):
-        if REG_SET.has('register_' + str(num)):
-            mode, selection = REG_SET.get('register_' + str(num))
+        reg_set = sublime.load_settings(SETTINGS_FILENAME)
+        if reg_set.has('register_' + str(num)):
+            mode, selection = reg_set.get('register_' + str(num))
             if mode == 'macro':
                 for macro_cmd in selection:
                     if macro_cmd['args'] is None:
@@ -28,14 +27,15 @@ class OutputRegisterCommand(sublime_plugin.TextCommand):
                     for cur_pos in sel:
                         self.view.insert(edit, cur_pos.begin(), out)
         else:
-            REG_SET.set('register_' + str(num), ['text', []])
+            reg_set.set('register_' + str(num), ['text', []])
 
 
 class _InputCommand(sublime_plugin.TextCommand):
     def run(self, edit, num):
+        reg_set = sublime.load_settings(SETTINGS_FILENAME)
         data = self.get_data()
-        REG_SET.set('register_' + str(num), data)
-        sublime.save_settings(settings_filename)
+        reg_set.set('register_' + str(num), data)
+        sublime.save_settings(SETTINGS_FILENAME)
 
 
 class InputSelectionCommand(_InputCommand):
@@ -56,6 +56,7 @@ class InputMacroCommand(_InputCommand):
 
 class ClearRegistersCommand(sublime_plugin.TextCommand):
     def run(self, edit):
+        reg_set = sublime.load_settings(SETTINGS_FILENAME)
         for num in range(10):
-            REG_SET.set('register_' + str(num), ['text', []])
-            sublime.save_settings(settings_filename)
+            reg_set.set('register_' + str(num), ['text', []])
+        sublime.save_settings(SETTINGS_FILENAME)
