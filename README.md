@@ -2,9 +2,9 @@
 
 ## Description
 A Sublime Text plugin that adds the option to save text and macros to registers for quick use.
-There are 10 possiblle registers, defined by a number from 0 to 9.
-The input text can be some selected text or the text current in the clipboard.
-Additonally, it's also possible to record the current native sublime macro in use into one of the resgisters, regardless of the content.
+There are 10 possible registers, defined by a number from 0 to 9.
+The input text can be some selected text or the text currently in the clipboard.
+Additonally, it's also possible to record the current native sublime macro in use into one of the registers, regardless of the content.
 
 ## Keyboard shortcuts
 
